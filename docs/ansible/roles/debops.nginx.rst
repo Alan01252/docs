@@ -35,6 +35,25 @@ This role requires at least Ansible ``v1.7.0``. To install it, run::
 
     ansible-galaxy install debops.nginx
 
+Example Usage
+~~~~~~~~~~~~~
+
+Basic Nginx server::
+
+    ---
+    - hosts: all
+    - sudo: false
+    
+    pre_tasks:
+      - name: ensure IP address of the ansible controller is set
+        set_fact:
+          ansible_controller: '{{ ansible)env.SSH_CLIENT.split(" ") | first}}/32'
+    roles:
+      - { role: debops.ferm,
+                ferm: true,
+                sudo: yes
+        }
+      - { role: debops.nginx, sudo: yes }
 
 Role dependencies
 ~~~~~~~~~~~~~~~~~
